@@ -34,3 +34,4 @@ The old `stream_ytaudio.py` file is kept for reference but is no longer used.
 `npm run test:audio` runs an online test with audio muted: it performs a search, starts FFplay, and verifies that the processes are terminated correctly. The test consumes one YouTube search request.
 
 The tools in `vendor` are built for Windows x64; other platforms require compatible binaries.
+I removed the `vendor` folder, which contained the `ffplay.exe` and `yt-dlp.exe` programs.
