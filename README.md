@@ -1,34 +1,36 @@
 # MusicRip
 
-Applicazione desktop con interfaccia Vue 3, Vite ed Electron.
+Desktop application built with Vue 3, Vite, and Electron.
 
-## Sviluppo
+## Development
 
 ```powershell
 npm run dev
 ```
 
-Avvia Vite e apre la finestra Electron. L'interfaccia si aggiorna al salvataggio dei file in `src`.
+Starts Vite and opens the Electron window. The interface automatically updates when files in `src` are saved.
 
-## Comandi
+## Commands
 
-- `npm run build` genera la build web in `dist`.
-- `npm run package` crea l'installer Windows in `release`.
+- `npm run build` generates the web build in `dist`.
+- `npm run package` creates the Windows installer in `release`.
 
-Il processo Electron è in `electron/main.cjs`; l'API esposta alla UI passa da `electron/preload.cjs` con context isolation attivo.
+The Electron main process is located in `electron/main.cjs`; the API exposed to the UI is provided through `electron/preload.cjs`, with context isolation enabled.
 
-## Riproduzione audio
+## Audio Playback
 
-La ricerca usa la chiave YouTube Data API già configurata in `electron/music.cjs`.
-Il processo principale avvia `vendor/yt-dlp.exe` (versione Windows standalone)
-per ottenere lo stream e passa URL e header a `vendor/ffplay.exe`.
-Non vengono eseguiti script Python e non occorre installare Python separatamente.
-Questi strumenti vengono inclusi nelle risorse esterne dell'installer.
+Search uses the YouTube Data API key already configured in `electron/music.cjs`.
 
-Stop, nuova ricerca e chiusura dell'app terminano i processi appartenenti al lettore.
-Le finestre console sono nascoste. Gli errori di ricerca e riproduzione sono mostrati nella home.
-Il vecchio `stream_ytaudio.py` è conservato come riferimento, ma non viene usato.
+The main process launches `vendor/yt-dlp.exe` (Windows standalone version) to retrieve the audio stream and passes the URL and headers to `vendor/ffplay.exe`.
 
-`npm run test:audio` esegue un test online con audio silenziato: ricerca, avvio di FFplay
-e verifica della terminazione dei processi. Consuma una richiesta di ricerca YouTube.
-Gli strumenti in `vendor` sono per Windows x64; per altre piattaforme servono binari compatibili.
+No Python scripts are executed, and Python does not need to be installed separately. These tools are included as external resources in the installer.
+
+Stopping playback, starting a new search, or closing the application terminates the processes associated with the player.
+
+Console windows are hidden. Search and playback errors are displayed on the home screen.
+
+The old `stream_ytaudio.py` file is kept for reference but is no longer used.
+
+`npm run test:audio` runs an online test with audio muted: it performs a search, starts FFplay, and verifies that the processes are terminated correctly. The test consumes one YouTube search request.
+
+The tools in `vendor` are built for Windows x64; other platforms require compatible binaries.
