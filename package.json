@@ -1,0 +1,56 @@
+{
+  "name": "vue-electron-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && electron .\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:audio": "node electron/music.smoke.cjs",
+    "package": "npm run build && electron-builder"
+  },
+  "dependencies": {
+    "cheerio": "^1.1.2"
+  },
+  "build": {
+    "appId": "com.example.vueelectronapp",
+    "productName": "MusicRip",
+    "files": [
+      "dist/index.html",
+      "dist/assets/**/*",
+      "dist/*.png",
+      "dist/*.svg",
+      "electron/**/*",
+      "package.json",
+      "!node_modules/**/*",
+      "node_modules/{boolbase,cheerio,cheerio-select,css-select,css-what,dom-serializer,domelementtype,domhandler,domutils,encoding-sniffer,entities,htmlparser2,iconv-lite,nth-check,parse5,parse5-htmlparser2-tree-adapter,parse5-parser-stream,safer-buffer,undici,whatwg-encoding,whatwg-mimetype}/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon-256.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraResources": [
+      {
+        "from": "vendor",
+        "to": "vendor"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "concurrently": "^10.0.5",
+    "electron": "^44.4.4",
+    "electron-builder": "^26.15.3",
+    "vite": "^8.3.0",
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1",
+    "wait-on": "^9.1.0"
+  }
+}
